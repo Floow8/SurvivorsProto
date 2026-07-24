@@ -1,0 +1,17 @@
+# Unreal Engine generated / cache — never version these
+Saved/
+Intermediate/
+DerivedDataCache/
+Build/
+Binaries/
+
+# IDE / OS noise
+.vs/
+.vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store
+
+# Local-only Claude settings (keep project settings if added deliberately)
+.claude/settings.local.json
