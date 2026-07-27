@@ -11,6 +11,7 @@ nodes with *Print to Log* only (invisible in-game, negligible cost):
 | Marker | Where | Proves |
 |---|---|---|
 | `BOLT-HIT` | `BP_Projectile` trace-hit branch | wand fires AND connects |
+| `ENEMY-HIT` | `BP_Enemy` AnyDamage entry | damage actually REACHES an enemy (BOLT-HIT without ENEMY-HIT = the 2026-07-27 null-target regression) |
 | `ENEMY-DIE` | `BP_Enemy` AnyDamage death branch | damage → death chain |
 | `GEM-XP` | `BP_PlayerStats.AddXP` entry | gem dropped, survived, got picked up |
 | `LVL-UP` | `BP_PlayerStats.AddXP` level loop | XP curve → level-up loop |
@@ -29,6 +30,8 @@ nodes with *Print to Log* only (invisible in-game, negligible cost):
 ## Pass criteria (30 s, fresh run, no input)
 
 - `BOLT-HIT` ≥ 10 — weapon connects (silence = the wand is broken)
+- `ENEMY-HIT` ≥ `BOLT-HIT` count — hits must actually damage someone; a
+  stream of BOLT-HIT with no ENEMY-HIT means ApplyDamage lost its target
 - `ENEMY-DIE` ≥ 8 — kill chain intact
 - `GEM-XP` ≥ 3, first one **later than ~5 s** — gems have a ground phase
   (instant `GEM-XP` after every `ENEMY-DIE` = insta-vacuum regression)
